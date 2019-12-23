@@ -1,0 +1,4 @@
+PIL
+numpy
+cv2
+pyautogui
