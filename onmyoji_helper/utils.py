@@ -21,7 +21,7 @@ pyautogui.FAILSAFE = False
 
 # 采用封装后的算法来进行识别  效率非常好
 # 为了防止程序冲突暂时写在这里，请回头更新到util中
-def find_and_click(target):
+def find_and_click(target, factor):
     """
     整合整个流程，找到目标位置偏移后点击
     :param target:目标图片位置
@@ -30,18 +30,18 @@ def find_and_click(target):
 
     screen = screen_shot()
     target = ac.imread(target)
-    confidence = 0.5
+    confidence = 0.9
     # 获取匹配结果
     match_result = ac.find_template(screen, target, confidence)
-    # print(match_result)
-    x = match_result['result'][0]
-    y = match_result['result'][1]
-    # 当前x y为识别图片的中心点，可以进行直接点击
-    origin = (x, y)
-    # 偏移坐标并点击
-    pos = cheat_pos(origin)
-    click(pos)
-    return pos
+    if match_result is not None:
+        print(match_result)
+        x = match_result['result'][0]
+        y = match_result['result'][1]
+        # 当前x y为识别图片的中心点，可以进行直接点击
+        origin = (x, y)
+        # 偏移坐标并点击
+        pos = cheat_pos(origin, factor=factor)
+        click(pos)
 
 
 def cheat_pos(origin, factor=5):
