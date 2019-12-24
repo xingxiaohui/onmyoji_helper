@@ -38,7 +38,6 @@ def get_location(target, kp2, des2):
     # knn筛选结果
     matches = bf.knnMatch(des1, trainDescriptors=des2, k=2)
     good = [m for (m, n) in matches if m.distance < 0.75 * n.distance]
-    print(4, len(good))
     if len(good) > MIN_MATCH_COUNT:
         src_pts = np.float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
         dst_pts = np.float32([kp2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
@@ -82,8 +81,13 @@ def click(target):
         print('未检测到目标')
     else:
         pyautogui.moveTo(target, duration=0.20)
-        pyautogui.click()
-        time.sleep(random.randint(500, 1000) / 1000)
+        times = random.randint(1, 2)
+        pyautogui.click(clicks=times, interval=0.25)
+        x, y = random.randint(-20, 20), random.randint(-20, 30)
+        # width, height = pyautogui.size()
+        # new = (width/2 + x, height/2 + y)
+        # pyautogui.moveTo(new, duration=0.10)
+        time.sleep(random.randint(800, 1300) / 1000)
 
 
 def screen_shot():
