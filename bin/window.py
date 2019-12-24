@@ -4,10 +4,9 @@ import threading
 import time
 import tkinter as tk
 from concurrent.futures import thread
-import tkinter
 from tkinter import *
 from tkinter import scrolledtext, messagebox
-from onmyoji_helper.Kylin import Kylin
+from onmyoji_helper import main
 
 
 tasks = []
@@ -43,7 +42,6 @@ class Window:
         self.initWidgets()
 
     def initWidgets(self):
-        kylin = Kylin()
         self.app = tk.Tk()  # 根窗口的实例(root窗口)
         self.app.title('阴阳师游戏助手')
         self.app.geometry('600x300')
@@ -57,9 +55,11 @@ class Window:
         t3 = scrolledtext.ScrolledText(frame2, font=('微软雅黑', 10))
         t3.pack(side=TOP, fill=X, expand=YES)
         frame2.pack(side=RIGHT, fill=BOTH, expand=YES)
-        Button(frame1, command=lambda: kylin.run(), text='自动御魂副本', width=20).pack(
+        Button(frame1, command=lambda: main.orochi(), text='自动御魂副本', width=20).pack(
             side=TOP, expand=YES)
-        Button(frame1, command=lambda: kylin.run(), text='自动觉醒副本', width=20).pack(
+        Button(frame1, command=lambda: main.kylin(), text='自动觉醒副本', width=20).pack(
+            side=TOP, expand=YES)
+        Button(frame1, command=lambda: main.explore(), text='自动探索副本', width=20).pack(
             side=TOP, expand=YES)
         Checkbutton(frame1, text='体力用完自动关闭游戏', command='').pack(side=TOP, anchor='w')
         Checkbutton(frame1, text='体力用完自动关机', command='').pack(side=TOP, anchor='w')

@@ -1,76 +1,60 @@
 """
 公用方法模块
-原作者的检测方法在新版本的opencv中被移除了，采用新的检测方式ORB形式，参考：
-https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_feature2d/py_orb/py_orb.html
+原作者的检测方法在新版本的opencv中被移除了，采用封装了SIFT算法的模块 aircv
+模块参考：
+https://github.com/NetEaseGame/aircv
+方法参考
+https://blog.csdn.net/qq_35741999/article/details/100434284
 """
 import random
 import time
 import cv2
 import numpy
-import numpy as np
 import pyautogui
 from PIL import ImageGrab
+import aircv as ac
+
 
 # 禁用 pyautogui 的保护性退出
 pyautogui.FAILSAFE = False
 
 
-def get_location(target, kp2, des2):
+# 采用封装后的算法来进行识别  效率非常好
+# 为了防止程序冲突暂时写在这里，请回头更新到util中
+def find_and_click(target):
     """
-    获取目标图像在截图中的位置
-    :param target:目标图片
-    :param kp2:截图的特征点
-    :param des2:截图的描述
-    :return: 返回坐标(x,y) 与 opencv 坐标系对应
+    整合整个流程，找到目标位置偏移后点击
+    :param target:目标图片位置
+    :return pos:最终点击的位置
     """
-    MIN_MATCH_COUNT = 10
-    img1 = target  # cv2.cvtColor(target,cv2.COLOR_BGR2GRAY)# 查询图片
-    # img2 = screenShot
-    # img2 = cv2.cvtColor(screenShot, cv2.COLOR_BGR2GRAY)  # 训练图片
-    # img2 = cv2.resize(img2, dsize=None, fx=0.5, fy=0.5, interpolation=cv2.INTER_NEAREST)
-    # 用SIFT找到关键点和描述符
-
-    kp1, des1 = orb_compute(img1)
-
-    # 提取并计算特征点
-    bf = cv2.BFMatcher(cv2.NORM_HAMMING)
-
-    # knn筛选结果
-    matches = bf.knnMatch(des1, trainDescriptors=des2, k=2)
-    good = [m for (m, n) in matches if m.distance < 0.75 * n.distance]
-    print(4, len(good))
-    if len(good) > MIN_MATCH_COUNT:
-        src_pts = np.float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
-        dst_pts = np.float32([kp2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
-        M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
-        matchesMask = mask.ravel().tolist()
-        h, w = img1.shape
-        pts = np.float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
-        if M is not None:
-            dst = cv2.perspectiveTransform(pts, M)
-            arr = np.int32(dst)  #
-            midPosArr = arr[0] + (arr[2] - arr[0]) // 2
-            midPos = (midPosArr[0][0], midPosArr[0][1])
-            # show=cv2.circle(img2,midPos,30,(255,255,255),thickness=5)
-            # cv2.imshow('s',show)
-            # cv2.waitKey()
-            # cv2.destroyAllWindows()
-            return midPos
-        else:
-            return None
-    else:
-        return None
+    screen = screen_shot()
+    target = ac.imread(target)
+    confidence = 0.5
+    # 获取匹配结果
+    match_result = ac.find_template(screen, target, confidence)
+    # print(match_result)
+    x = match_result['result'][0]
+    y = match_result['result'][1]
+    # 当前x y为识别图片的中心点，可以进行直接点击
+    origin = (x, y)
+    # 偏移坐标并点击
+    pos = cheat_pos(origin)
+    click(pos)
+    return pos
 
 
 def cheat_pos(origin, factor=5):
     """
     对原始点击坐标进行随机偏移，防止封号
     :param origin:原始坐标
+    :param factor:偏移量
     :return new:偏移后的坐标
     """
-    x, y = random.randint(-factor, factor), random.randint(-factor, factor)
-    new = (origin[0] + x, origin[1] + y)
-    return new
+    if origin is not None:
+        x, y = random.randint(-factor, factor), random.randint(-factor, factor)
+        new = (origin[0] + x, origin[1] + y)
+        return new
+    return origin
 
 
 def click(target):
@@ -94,19 +78,5 @@ def screen_shot():
     screen = ImageGrab.grab()
     # screen.save('D:/screen.jpg')
     # screen = cv2.imread('D:/screen.jpg')
-    screen = cv2.cvtColor(numpy.asarray(screen), cv2.COLOR_RGB2BGR)
+    screen = cv2.cvtColor(numpy.asarray(screen), 0)
     return screen
-
-
-def detect_and_compute_screen_shot():
-    kp2, des2 = orb_compute(screen_shot())
-    return kp2, des2
-
-
-def orb_compute(img):
-    # 读取图片
-    # img1 = cv2.imread(img1_path, cv2.IMREAD_GRAYSCALE)  # trainning picture
-    # 初始化ORB检测器
-    orb = cv2.ORB_create()
-    kp, des = orb.detectAndCompute(img, None)
-    return kp, des
