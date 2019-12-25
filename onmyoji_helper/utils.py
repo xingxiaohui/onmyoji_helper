@@ -1,6 +1,6 @@
 """
 公用方法模块
-原作者的检测方法在新版本的opencv中被移除了，采用封装了SIFT算法的模块 aircv
+原参考的检测算法SIFT在新版本的opencv中被移除了，采用封装了SIFT算法的模块 aircv
 模块参考：
 https://github.com/NetEaseGame/aircv
 方法参考
@@ -20,7 +20,6 @@ pyautogui.FAILSAFE = False
 
 
 # 采用封装后的算法来进行识别  效率非常好
-# 为了防止程序冲突暂时写在这里，请回头更新到util中
 def find_and_click(target, factor):
     """
     整合整个流程，找到目标位置偏移后点击
@@ -69,11 +68,7 @@ def click(target):
         pyautogui.moveTo(target, duration=0.20)
         times = random.randint(1, 2)
         pyautogui.click(clicks=times, interval=0.25)
-        x, y = random.randint(-20, 20), random.randint(-20, 30)
-        # width, height = pyautogui.size()
-        # new = (width/2 + x, height/2 + y)
-        # pyautogui.moveTo(new, duration=0.10)
-        time.sleep(random.randint(800, 1300) / 1000)
+        time.sleep(random.randint(500, 1000) / 1000)
 
 
 def screen_shot():

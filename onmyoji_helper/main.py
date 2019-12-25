@@ -6,37 +6,34 @@ import time
 
 from onmyoji_helper import utils
 from onmyoji_helper import config
-import os
 
 
-jieshu = ['jiangli.png','jieshu.png']
+jieshu = ['jiangli.png', 'jieshu.png']
 
 
 # 觉醒副本
 def kylin():
-    FLAG = True
     path = 'F:/image/kylin/'
     images = config.kylin_image_names
-    while FLAG:
-        for img in images:
-            print(img)
-            # 注意 需要针对不同的图片进行不同的鼠标点击偏移
-            if img in jieshu:
-                utils.find_and_click(path + str(img), 30)
-            else:
-                utils.find_and_click(path + str(img), 5)
+    for img in images:
+        print(img)
+        # 注意 需要针对不同的图片进行不同的鼠标点击偏移
+        if img in jieshu:
+            utils.find_and_click(path + str(img), 30)
+        else:
+            utils.find_and_click(path + str(img), 5)
 
 
 # 御魂副本
 def orochi():
-    FLAG = True
     path = 'F:/image/orochi/'
     images = config.orochi_image_names
-    while FLAG:
-        for img in images:
-            # 注意 需要针对不同的图片进行不同的鼠标点击偏移
-            utils.find_and_click(path + str(img))
-        FLAG = False
+    for img in images:
+        # 注意 需要针对不同的图片进行不同的鼠标点击偏移
+        if img in jieshu:
+            utils.find_and_click(path + str(img), 30)
+        else:
+            utils.find_and_click(path + str(img), 5)
 
 
 # 探索副本
@@ -57,25 +54,12 @@ def orochi():
 
 # 组队战斗、妖气封印、年兽
 def troops():
-    FLAG = True
     path = 'F:/image/troops/'
     images = config.troops_image_names
-    while FLAG:
-        for img in images:
-            print(img)
-            # 注意 需要针对不同的图片进行不同的鼠标点击偏移
-            if img in jieshu:
-                utils.find_and_click(path + str(img), 30)
-            else:
-                utils.find_and_click(path + str(img), 5)
-
-
-def test_thread():
-    print(1, 'lalallala')
-    time.sleep(2)
-
-
-if __name__ == "__main__":
-    pass
-    # kylin()
-    # explore()
+    for img in images:
+        print(img)
+        # 注意 需要针对不同的图片进行不同的鼠标点击偏移
+        if img in jieshu:
+            utils.find_and_click(path + str(img), 30)
+        else:
+            utils.find_and_click(path + str(img), 5)

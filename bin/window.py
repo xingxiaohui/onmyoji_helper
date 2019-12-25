@@ -40,13 +40,13 @@ class Window:
         t3 = scrolledtext.ScrolledText(frame2, font=('微软雅黑', 10))
         t3.pack(side=TOP, fill=X, expand=YES)
         frame2.pack(side=RIGHT, fill=BOTH, expand=YES)
-        Button(frame1, command=lambda: start('orochi'), text='自动御魂副本', width=20).pack(
+        Button(frame1, command=lambda: start('orochi', t3), text='自动御魂副本', width=20).pack(
             side=TOP, expand=YES)
-        Button(frame1, command=lambda:  start('kylin'), text='自动觉醒副本', width=20).pack(
+        Button(frame1, command=lambda:  start('kylin', t3), text='自动觉醒副本', width=20).pack(
             side=TOP, expand=YES)
         # Button(frame1, command=lambda: start('test', t3), text='测试线程', width=20).pack(
         #     side=TOP, expand=YES)
-        Button(frame1, command=lambda: start('troops'), text='自动组队', width=20).pack(
+        Button(frame1, command=lambda: start('troops', t3), text='自动组队', width=20).pack(
             side=TOP, expand=YES)
         Checkbutton(frame1, text='体力用完自动关闭游戏', command='').pack(side=TOP, anchor='w')
         Checkbutton(frame1, text='体力用完自动关机', command='').pack(side=TOP, anchor='w')

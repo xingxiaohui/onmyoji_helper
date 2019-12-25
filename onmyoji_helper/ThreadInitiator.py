@@ -7,6 +7,8 @@ from tkinter import END
 
 from onmyoji_helper import main
 
+titles = {'kylin': '觉醒副本', 'orochi': '御魂副本', 'troops': '组队副本'}
+
 
 class ThreadInitiator(threading.Thread):
     def __init__(self, target, log):
@@ -17,10 +19,9 @@ class ThreadInitiator(threading.Thread):
 
     def run(self):
         count = 1
-        print("开始线程：" + self.target)
         self.log.insert(END,
                         time.strftime('%Y-%m-%d %H:%M:%S ',
-                                      time.localtime(time.time())) + '开始挑战\n')
+                                      time.localtime(time.time())) + '开始挑战'+titles[str(self.target)]+'\n')
         while self.flag:
             self.log.insert(END,
                             time.strftime('%Y-%m-%d %H:%M:%S ',
