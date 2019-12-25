@@ -1,20 +1,14 @@
-import ctypes
-import inspect
-import threading
-import time
 import tkinter as tk
-from concurrent.futures import thread
 from tkinter import *
-from tkinter import scrolledtext, messagebox
-from onmyoji_helper import main
+from tkinter import scrolledtext
 from onmyoji_helper.ThreadInitiator import ThreadInitiator
 
 tasks = []
 
 
-def start(target):
+def start(target, log):
     # 创建新线程
-    threadInitiator = ThreadInitiator(target)
+    threadInitiator = ThreadInitiator(target, log=log)
     # 开启新线程
     threadInitiator.start()
     # 记录在运行的线程
@@ -50,7 +44,7 @@ class Window:
             side=TOP, expand=YES)
         Button(frame1, command=lambda:  start('kylin'), text='自动觉醒副本', width=20).pack(
             side=TOP, expand=YES)
-        # Button(frame1, command=lambda: start('target_method'), text='自动探索副本', width=20).pack(
+        # Button(frame1, command=lambda: start('test', t3), text='测试线程', width=20).pack(
         #     side=TOP, expand=YES)
         Button(frame1, command=lambda: start('troops'), text='自动组队', width=20).pack(
             side=TOP, expand=YES)
