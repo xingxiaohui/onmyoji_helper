@@ -23,9 +23,6 @@ class ThreadInitiator(threading.Thread):
                         time.strftime('%Y-%m-%d %H:%M:%S ',
                                       time.localtime(time.time())) + '开始挑战'+titles[str(self.target)]+'\n')
         while self.flag:
-            self.log.insert(END,
-                            time.strftime('%Y-%m-%d %H:%M:%S ',
-                                          time.localtime(time.time())) + '第' + str(count) + '轮开始\n')
             self.log.see(END)
             if self.target == 'kylin':
                 main.kylin()
@@ -36,7 +33,6 @@ class ThreadInitiator(threading.Thread):
             # elif self.target == 'test':
             #     print('test')
             #     time.sleep(2)
-            count += 1
             if count > 60:
                 self.log.delete(1.0, END)  # 使用 delete
                 self.log.insert(END, ' 清空日志\n')

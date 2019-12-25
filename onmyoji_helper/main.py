@@ -16,7 +16,6 @@ def kylin():
     path = 'F:/image/kylin/'
     images = config.kylin_image_names
     for img in images:
-        print(img)
         # 注意 需要针对不同的图片进行不同的鼠标点击偏移
         if img in jieshu:
             utils.find_and_click(path + str(img), 30)
@@ -34,7 +33,6 @@ def orochi():
             utils.find_and_click(path + str(img), 30)
         else:
             utils.find_and_click(path + str(img), 5)
-
 
 # 探索副本
 # 探索副本要素过多且复杂，不打算实现了
