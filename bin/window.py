@@ -22,6 +22,20 @@ def stop():
     tasks = []
 
 
+def short_cut(event):
+    """
+    按f4 停止脚本
+    :param event:
+    :return:
+    """
+    # print("event.char =", event.char)
+    # print("event.keycode =", event.keycode)
+    # F4停止
+    global app
+    if event.keycode == 115:
+        stop()
+
+
 class Window:
     def __init__(self):
         self.app = tk.Tk()  # 根窗口的实例(root窗口)
@@ -54,7 +68,7 @@ class Window:
 
         self.app.protocol("WM_DELETE_WINDOW", '')
         Window.LogUI = t3
-        self.app.bind("<Key>", '')
+        self.app.bind("<Key>", short_cut)
         self.app.mainloop()  # 窗口的主事件循环，必须的。
 
 
