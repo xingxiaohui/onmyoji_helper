@@ -2,18 +2,22 @@
 程序主入口
 其他模块都可删除了都以方法的形式写在这里
 """
+import os
 import time
+
+import aircv as ac
 
 from onmyoji_helper import utils
 from onmyoji_helper import config
 
 
 jieshu = ['jiangli.png', 'jieshu.png']
+path = os.path.abspath(os.path.dirname(__file__)).split('onmyoji_helper')[0] + str('onmyoji_helper\\image\\')
 
 
 # 觉醒副本
 def kylin():
-    path = 'F:/image/kylin/'
+    # path = 'F:/image/kylin/'
     images = config.kylin_image_names
     for img in images:
         # 注意 需要针对不同的图片进行不同的鼠标点击偏移
@@ -25,7 +29,7 @@ def kylin():
 
 # 御魂副本
 def orochi():
-    path = 'F:/image/orochi/'
+    # path = 'F:/image/orochi/'
     images = config.orochi_image_names
     for img in images:
         # 注意 需要针对不同的图片进行不同的鼠标点击偏移
@@ -52,7 +56,7 @@ def orochi():
 
 # 组队战斗、妖气封印、年兽
 def troops():
-    path = 'F:/image/troops/'
+    # path = 'F:/image/troops/'
     images = config.troops_image_names
     for img in images:
         print(img)
