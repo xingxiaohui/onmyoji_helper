@@ -22,9 +22,9 @@ def kylin():
     for img in images:
         # 注意 需要针对不同的图片进行不同的鼠标点击偏移
         if img in jieshu:
-            utils.find_and_click(path + str(img), 30)
+            utils.find_and_click(path + 'kylin_' + str(img), 30)
         else:
-            utils.find_and_click(path + str(img), 5)
+            utils.find_and_click(path + 'kylin_' + str(img), 5)
 
 
 # 御魂副本
@@ -34,9 +34,9 @@ def orochi():
     for img in images:
         # 注意 需要针对不同的图片进行不同的鼠标点击偏移
         if img in jieshu:
-            utils.find_and_click(path + str(img), 30)
+            utils.find_and_click(path + 'orochi_' + str(img), 30)
         else:
-            utils.find_and_click(path + str(img), 5)
+            utils.find_and_click(path + 'orochi_' + str(img), 5)
 
 # 探索副本
 # 探索副本要素过多且复杂，不打算实现了
@@ -62,6 +62,6 @@ def troops():
         print(img)
         # 注意 需要针对不同的图片进行不同的鼠标点击偏移
         if img in jieshu:
-            utils.find_and_click(path + str(img), 30)
+            utils.find_and_click(path + 'troops_' + str(img), 30)
         else:
-            utils.find_and_click(path + str(img), 5)
+            utils.find_and_click(path + 'troops_' + str(img), 5)
