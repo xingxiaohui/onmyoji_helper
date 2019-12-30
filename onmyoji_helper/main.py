@@ -59,7 +59,6 @@ def troops():
     # path = 'F:/image/troops/'
     images = config.troops_image_names
     for img in images:
-        print(img)
         # 注意 需要针对不同的图片进行不同的鼠标点击偏移
         if img in jieshu:
             utils.find_and_click(path + 'troops_' + str(img), 30)
